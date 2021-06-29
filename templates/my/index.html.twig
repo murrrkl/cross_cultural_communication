@@ -4,7 +4,7 @@
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper { margin: 0 auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     textarea {
         width: 630px;
         height: 300px;
@@ -12,6 +12,7 @@
         border: 1px solid #cecece;
         background: #F6F6f6;
         border-radius: 8px;
+        margin-left: 6em;
     }
     button {
         width: 630px;
@@ -19,8 +20,36 @@
         font-size: 18px;
         background: lightskyblue;
         border-radius: 8px;
+        text-align: center;
+        margin-left: 4.4em;
+    }
+
+    #result {
+        margin-top: 20px;
+        font-size: 22px;
+        color:navy;
+        text-align: center;
+    }
+    #key {
+        font-size: 22px;
+        color:red;
+        height: 1px;
+        text-align: center;
+    }
+    p {
+        font-size: 22px;
+        text-align: center;
+    }
+    .error {
+        font-size: 22px;
+        color:red;
+        margin-left: 12em;
+        text-align: center;
     }
     .place { height: 10px;}
+    h1 {
+        text-align: center;
+    }
 </style>
 
 <div class="example-wrapper">
@@ -32,6 +61,35 @@
     </form>
 
 </div>
-    
+    <div id="result">
+    {% if situations is defined %}
+        {%  for s in situations %}
 
+            {{ s.description }}
+
+        {%endfor%}
+    {% endif %}
+    </div>
+    <div>
+    {% if keys is defined %}
+        <p id="key">
+            Ключи для определения ситуации:
+        </p>
+        <p>
+        {%  for k in keys %}
+            <br> {{ k }}
+        {%endfor%}
+        </p>
+    {% endif %}
+        {% if error_search is defined %}
+        <div class="error">
+            Ситуация не распознана! Возможно данные введены некорректно, попробуйте снова.
+        </div>
+        {% endif %}
+        {% if emty_text is defined %}
+            <div class="error">
+                Текстовое поле для описания ситуации пусто. Введите описание и повторите попытку.
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
